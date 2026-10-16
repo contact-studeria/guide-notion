@@ -1,0 +1,669 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Livret de tournage — Notion</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0f0038; --soft:#4a4a6a; --muted:#8a8aa0;
+  --accent:#7b1ad5; --accent-soft:#f3ecfb;
+  --surface:#ffffff; --white:#ffffff; --panel:#f7f7fa;
+  --border:#e3e2e8; --border-strong:#cfcdd8;
+  --alert:#b42318;
+  --radius:10px; --rlg:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--surface);line-height:1.7}
+
+.sidebar{position:fixed;top:0;left:0;width:290px;height:100vh;background:var(--ink);
+  padding:26px 14px;overflow-y:auto;z-index:100;transition:transform .3s}
+.sidebar .logo{font-size:18px;color:#fff;font-weight:700;padding:0 10px}
+.sidebar .sub{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;
+  letter-spacing:1.6px;margin:5px 0 22px;padding:0 10px}
+.nav-section{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;
+  letter-spacing:1.4px;padding:14px 10px 6px;font-weight:700}
+.sidebar a{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;margin-bottom:1px;
+  color:rgba(255,255,255,.62);text-decoration:none;font-size:13px;font-weight:400;
+  border-radius:6px;line-height:1.4;transition:.15s}
+.sidebar a:hover,.sidebar a.active{background:rgba(255,255,255,.08);color:#fff}
+.sidebar .n{font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(255,255,255,.35);min-width:20px;flex-shrink:0}
+.sidebar .div{height:1px;background:rgba(255,255,255,.1);margin:14px 10px}
+.toggle{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--ink);
+  color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:18px;cursor:pointer}
+
+.main{margin-left:290px;min-height:100vh}
+.hero{background:var(--ink);padding:56px 50px 48px}
+.hero-c{max-width:760px}
+.badge{display:inline-block;color:rgba(255,255,255,.5);font-size:11px;font-weight:600;
+  letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(28px,4vw,40px);color:#fff;font-weight:700;line-height:1.2;margin-bottom:12px}
+.hero h1 em{font-style:normal;color:#fff}
+.hero-c>p{font-size:16px;color:rgba(255,255,255,.6);max-width:600px;margin-bottom:26px}
+.hero-tags{display:flex;gap:10px;flex-wrap:wrap}
+.hero-tags span{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.75);
+  font-size:12.5px;background:rgba(255,255,255,.07);border-radius:6px;padding:6px 12px}
+.hero-tags .ic{font-size:13px;opacity:.75}
+
+.content{max-width:800px;margin:0 auto;padding:44px 32px 100px}
+.ch{margin-bottom:52px;scroll-margin-top:20px}
+.ch-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.ch-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--muted);
+  flex-shrink:0}
+.ch h2{font-size:23px;font-weight:700;line-height:1.25}
+.card{background:var(--white);border-radius:var(--rlg);padding:30px;border:1px solid var(--border)}
+.card p{margin-bottom:14px;color:var(--soft);font-size:15px}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--ink);font-weight:600}
+.card h3{font-size:18px;font-weight:700;color:var(--ink);margin:34px 0 12px;
+  padding-top:18px;border-top:1px solid var(--border)}
+.card h3:first-child{margin-top:0;padding-top:0;border-top:none}
+.card h4{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.1px;
+  text-transform:uppercase;margin:20px 0 8px}
+.card ul{margin:10px 0 14px 20px;color:var(--soft);font-size:15px}
+.card li{margin-bottom:6px}
+.card a{color:var(--accent);font-weight:600}
+
+.analogy,.prereq,.warning-big{background:var(--panel);border-radius:var(--radius);
+  padding:18px 22px;margin:18px 0;border:1px solid var(--border);border-left:3px solid var(--border-strong)}
+.warning-big{border-left-color:var(--alert)}
+.analogy .al,.prereq .pl,.warning-big .wl{font-weight:700;color:var(--ink);font-size:12px;
+  letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.warning-big .wl{color:var(--alert)}
+.analogy p,.prereq p,.prereq li,.warning-big p{font-size:14.5px;color:var(--soft);margin:0}
+.prereq ul{list-style:none;padding:0;margin:6px 0 0}
+.prereq li{padding:5px 0 5px 22px;position:relative}
+.prereq li::before{content:'\2610';position:absolute;left:0;color:var(--muted)}
+
+.steps{counter-reset:s;list-style:none;padding:0;margin:16px 0}
+.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 46px;margin-bottom:6px;
+  background:var(--white);border-radius:var(--radius);border:1px solid var(--border);
+  font-size:14.5px;color:var(--soft)}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:14px;
+  color:var(--muted);font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.steps li strong{color:var(--ink)}
+
+.tw{overflow-x:auto;margin:16px 0;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+thead{background:var(--panel)}
+thead th{padding:11px 14px;text-align:left;color:var(--ink);font-weight:700;font-size:11px;
+  text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;border-bottom:1px solid var(--border-strong)}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--soft);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+.vide{color:var(--muted);font-style:italic;font-size:12px}
+.cap{font-size:12.5px;color:var(--muted);margin:-6px 0 16px}
+
+.tip{display:flex;gap:12px;padding:16px 20px;border-radius:var(--radius);margin:16px 0;
+  background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--border-strong)}
+.tip.warn,.tip.err{border-left-color:var(--alert)}
+.tip-i{font-size:16px;flex-shrink:0;margin-top:1px;opacity:.8}
+.tip-c{font-size:14px;color:var(--soft)}
+.tip-c strong{color:var(--ink)}
+.tip-c>strong:first-child{display:block;margin-bottom:3px}
+
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:16px 0}
+.vc{background:var(--white);border-radius:var(--radius);padding:16px;border:1px solid var(--border)}
+.vc .vt{font-weight:700;color:var(--ink);font-size:14px;margin-bottom:4px}
+.vc .vd{font-size:13px;color:var(--soft)}
+.vc .ve{font-size:12px;color:var(--muted);margin-top:5px}
+
+.flow{display:flex;align-items:center;gap:0;margin:20px 0;flex-wrap:wrap;justify-content:center}
+.flow-node{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
+  padding:12px 18px;text-align:center;min-width:120px}
+.flow-node .fl{font-size:20px;margin-bottom:4px;opacity:.8}
+.flow-node .fn2{font-weight:700;font-size:13px;color:var(--ink)}
+.flow-node .fd{font-size:11px;color:var(--muted)}
+.flow-arrow{font-size:18px;color:var(--muted);padding:0 8px;flex-shrink:0}
+
+.cbx{margin:16px 0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
+.cbx-h{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:9px 14px;border-bottom:1px solid var(--border)}
+.cbx-l{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.7px}
+.cbx-b{background:var(--white);color:var(--ink);border:1px solid var(--border-strong);border-radius:6px;
+  padding:5px 13px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit;flex-shrink:0}
+.cbx-b:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.cbx-b.done{color:var(--accent);border-color:var(--accent)}
+.cbx-p{padding:14px 16px;margin:0;color:var(--ink);font-family:'JetBrains Mono',monospace;
+  font-size:12px;line-height:1.7;white-space:pre-wrap;overflow-x:auto;max-height:420px;overflow-y:auto}
+
+.dlb{display:flex;align-items:center;gap:14px;text-decoration:none;margin:14px 0;width:100%;
+  text-align:left;font-family:inherit;cursor:pointer;
+  background:var(--white);border:1px solid var(--accent);border-radius:var(--radius);
+  padding:14px 18px;transition:.15s}
+.dlb[disabled]{opacity:.5;cursor:default;border-color:var(--border)}
+.dlb:hover{background:var(--accent-soft)}
+.dlb-i{flex-shrink:0;width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700}
+.dlb-t{display:flex;flex-direction:column;min-width:0}
+.dlb-t b{color:var(--ink);font-size:14.5px;font-weight:700}
+.dlb-t span{color:var(--muted);font-size:12.5px}
+
+.footer{text-align:center;padding:36px;color:var(--muted);font-size:12.5px;
+  border-top:1px solid var(--border);margin-top:36px}
+
+@media (max-width:800px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .toggle{display:block}
+  .main{margin-left:0}
+  .hero{padding:68px 20px 40px}
+  .content{padding:28px 16px 60px}
+  .card{padding:20px}
+  .flow{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg)}
+}
+@media print{
+  .sidebar,.toggle,.cbx-b,.dlb{display:none !important}
+  .main{margin-left:0 !important}
+  .hero{background:#fff;color:#000;padding:0 0 24px}
+  .hero h1,.hero h1 em{color:#000}
+  .hero-c>p,.badge,.hero-tags span{color:#333}
+  .ch,.lec{break-inside:avoid}
+  .card{border:1px solid #ddd}
+}
+</style>
+
+<style>
+.lec{border:1px solid var(--border);border-radius:var(--rlg);margin:22px 0;overflow:hidden;
+  scroll-margin-top:20px}
+.lec-h{display:flex;align-items:baseline;gap:12px;padding:15px 20px;background:var(--panel);
+  border-bottom:1px solid var(--border);flex-wrap:wrap}
+.lec-n{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  color:var(--muted);flex-shrink:0}
+.lec-t{font-weight:700;font-size:16.5px;color:var(--ink);flex:1 1 180px;min-width:0}
+.lec-d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);flex-shrink:0}
+.lec-b{padding:22px 20px}
+.lec-b>p{font-size:15px}
+.say{border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:0 0 20px}
+.say .sl{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);
+  font-weight:700;margin-bottom:5px}
+.say p{color:var(--ink);font-size:15.5px;margin:0;font-style:italic;line-height:1.6}
+.ecr{display:grid;grid-template-columns:auto 1fr;gap:9px 18px;margin:18px 0;align-items:baseline;
+  padding:16px 18px;background:var(--panel);border-radius:var(--radius)}
+.ecr dt{font-size:10.5px;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);
+  font-weight:700;white-space:nowrap}
+.ecr dd{margin:0;font-size:14.5px;color:var(--soft)}
+.ecr dd b{color:var(--ink)}
+@media (max-width:560px){.ecr{grid-template-columns:1fr;gap:2px}.ecr dd{margin-bottom:10px}}
+.clics{counter-reset:k;list-style:none;padding:0;margin:10px 0 4px}
+.clics li{counter-increment:k;position:relative;padding:8px 0 8px 34px;
+  border-bottom:1px solid var(--border);font-size:14.5px;color:var(--soft);line-height:1.6}
+.clics li:last-child{border-bottom:none}
+.clics li::before{content:counter(k);position:absolute;left:0;top:8px;
+  color:var(--muted);font-size:11.5px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.clics li b{color:var(--ink)}
+.hc2{font-size:13.5px;color:var(--muted);border-top:1px solid var(--border);
+  padding-top:12px;margin-top:16px}
+.hc2 b{color:var(--soft)}
+</style>
+
+<style>.ch{margin-bottom:0}#prepa{scroll-margin-top:20px}</style>
+
+<button class="toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<nav class="sidebar">
+  <div class="logo">🧠 Notion</div>
+  <div class="sub">Livret de tournage · Studeria</div>
+  <div class="nav-section">🎬 Avant de tourner</div>
+  <a href="#prepa"><span class="n">•</span>Le plateau et les données</a>
+  <div class="div"></div>
+  <div class="nav-section">📖 Les leçons</div>
+  <a href="#L01"><span class="n">01</span>Pourquoi pas un dossier de documents</a>
+  <a href="#L02"><span class="n">02</span>Notion, vu de haut</a>
+  <a href="#L03"><span class="n">03</span>Ce que ça coûte vraiment</a>
+  <a href="#L04"><span class="n">04</span>Le point de départ</a>
+  <a href="#L05"><span class="n">05</span>L'arborescence</a>
+  <a href="#L06"><span class="n">06</span>La base Clients</a>
+  <a href="#L07"><span class="n">07</span>Le modèle qui fait gagner une heure</a>
+  <a href="#L08"><span class="n">08</span>Relier les bases, et calculer</a>
+  <a href="#L09"><span class="n">09</span>Les vues qui font travailler la base</a>
+  <a href="#L10"><span class="n">10</span>Un seul graphique, bien choisi</a>
+  <a href="#L11"><span class="n">11</span>Le formulaire de cadrage</a>
+  <a href="#L12"><span class="n">12</span>Ce qui se répète : boutons et automatisations</a>
+  <a href="#L13"><span class="n">13</span>Écrire une fois, afficher partout</a>
+  <a href="#L14"><span class="n">14</span>L'IA sur ses propres contenus</a>
+  <a href="#L15"><span class="n">15</span>Partager sans tout ouvrir</a>
+  <a href="#L16"><span class="n">16</span>Limites et checklist</a>
+</nav>
+
+<div class="main">
+<div class="hero"><div class="hero-c">
+  <span class="badge">🎬 Focus outils · Outil 5</span>
+  <h1>Tourner le chapitre <em>Notion</em></h1>
+  <p>16 leçons, 1 h 57. Ce qu'on sait, ce qu'on a déjà fait, ce qu'on réutilise d'un client à l'autre.</p>
+  <div class="hero-tags"><span><span class="ic">📋</span>16 leçons · 1 h 57</span><span><span class="ic">🔑</span>Compte gratuit + 2e membre</span><span><span class="ic">⏱️</span>1 h 15 de préparation</span><span><span class="ic">📊</span>2 fichiers CSV</span></div>
+</div></div>
+
+<div class="content">
+<div class="ch" id="prepa">
+  <div class="card">
+<p><strong>16 leçons, 1 h 57.</strong> Le cas pratique : l'apprenant refait le même travail à chaque
+client — la même trame de cadrage, les mêmes questions, la même proposition réécrite. On construit
+la base de connaissance qui arrête ça, et on passe par tout ce dont il se servira vraiment.</p>
+
+<div class="tip info"><span class="tip-i">🎬</span><div class="tip-c"><strong>Comment se servir de ce chapitre le jour du tournage</strong>
+Une fiche par leçon. La phrase d'ouverture se dit telle quelle, l'écran de départ doit être
+exactement celui décrit, et les gestes se suivent dans l'ordre. Les données à coller et les fichiers
+à importer sont dans les fiches, avec leur bouton.</div></div>
+
+<div class="tip info"><span class="tip-i">📦</span><div class="tip-c"><strong>Les deux espaces sont fournis : rien à constituer à l'avance</strong>
+L'<strong>espace fouillis</strong> de la leçon 1 et l'<strong>espace dense</strong> de la leçon 14
+sont deux archives à importer, plus bas. Notion crée toutes les pages d'un coup :
+<em>Paramètres › Importer › Markdown &amp; CSV</em>, puis choisir le fichier <code>.zip</code>.
+Compter <strong>cinq minutes pour les deux</strong>, la veille ou le matin même.</div></div>
+
+<div class="tip warn"><span class="tip-i">🗓️</span><div class="tip-c"><strong>Les dates de modification seront toutes identiques, et ce n'est pas grave</strong>
+Un import crée les pages maintenant : la colonne « modifié il y a… » dira la même chose partout.
+Les deux leçons ont été écrites pour ne pas en dépendre — <strong>les dates sont dans les titres et
+dans le texte des pages</strong>, pas dans les métadonnées. Ne pas faire défiler la colonne des dates
+à l'écran, et le désordre se verra quand même.</div></div>
+
+<div class="warning-big"><div class="wl">🖐️ Ce qui est préparé, et ce qui se fait devant la caméra</div>
+<p>Les <strong>comptes</strong>, l'<strong>espace fouillis</strong>, l'<strong>espace dense</strong>,
+les <strong>trois propositions</strong> et les <strong>données des deux bases</strong> sont prêts.
+L'espace du cabinet, lui, se construit en direct — les trois racines, les bases, le modèle, la
+relation, les vues, le formulaire. C'est ça qu'on vient voir.</p></div>
+
+<h3>À avoir sur le plateau avant de commencer</h3>
+<div class="prereq"><div class="pl">🔑 Comptes, onglets, fichiers</div>
+<ul>
+  <li>Un compte <strong>Notion gratuit</strong>, avec un <strong>deuxième membre invité</strong> —
+    c'est ce qui fait apparaître la limite de blocs à montrer en leçon 3</li>
+  <li>Un <strong>espace vierge</strong> pour le cas pratique, distinct de l'espace fouillis</li>
+  <li>L'<strong>espace fouillis</strong> de la leçon 1 — <strong>archive fournie</strong>, à importer</li>
+  <li>L'<strong>espace dense</strong> de la leçon 14, 20 pages — <strong>archive fournie</strong>, à importer</li>
+  <li>Les <strong>trois propositions anonymisées</strong> de la leçon 4, qui se ressemblent à 70 %</li>
+  <li>Une <strong>adresse mail de test</strong> pour remplir le formulaire de la leçon 11 depuis
+    l'extérieur</li>
+  <li>Onglet : notion.com/pricing — pour la leçon 3</li>
+</ul></div>
+
+<div class="warning-big"><div class="wl">⚠️ Ce qu'il ne faut surtout pas annoncer de travers</div>
+<p>Les <strong>agents personnalisés</strong> ne sont pas disponibles sur le gratuit : l'apprenant au
+palier gratuit a un <strong>essai limité de l'IA</strong>, pas des agents. Les <strong>automatisations
+de base de données</strong> non plus — sur le gratuit, seules les notifications Slack sont
+possibles. Et le gratuit ne donne droit qu'à <strong>un seul graphique</strong>. Promettre l'inverse,
+c'est envoyer toute la cible se cogner à un mur de paiement en pleine vidéo.</p></div>
+
+<h3>Les deux espaces à importer</h3>
+<p>Un seul import chacun : <em>Paramètres › Importer › Markdown &amp; CSV</em>, puis le fichier
+<code>.zip</code>. Les importer dans <strong>deux espaces séparés</strong>, et aucun des deux dans
+l'espace vierge du cas pratique.</p>
+<button class="dlb" id="f60" data-nom="NOTION-espace-fouillis.zip" onclick="tele(this)"><span class="dlb-i">⬇</span><span class="dlb-t"><b>L&#x27;espace fouillis — leçon 1</b><span>18 pages mal rangées : doublons, pages sans titre, page enfouie sur quatre niveaux · NOTION-espace-fouillis.zip · 4 Ko</span></span><script type="application/octet-stream" id="b60">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</script></button><button class="dlb" id="f61" data-nom="NOTION-espace-dense.zip" onclick="tele(this)"><span class="dlb-i">⬇</span><span class="dlb-t"><b>L&#x27;espace dense — leçon 14</b><span>20 pages de contenu réel, dont celle qui contient la réponse à la question préparée · NOTION-espace-dense.zip · 7 Ko</span></span><script type="application/octet-stream" id="b61">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</script></button>
+<h3>Les trois propositions — leçon 4</h3>
+<button class="dlb" id="f62" data-nom="NOTION-trois-propositions.zip" onclick="tele(this)"><span class="dlb-i">⬇</span><span class="dlb-t"><b>Les trois propositions</b><span>3 pages bâties sur le même squelette : 4 sections sur 7 identiques mot pour mot · NOTION-trois-propositions.zip · 3 Ko</span></span><script type="application/octet-stream" id="b62">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</script></button>
+<h3>Les deux bases — à importer, pas à saisir</h3>
+<p>Notion importe un fichier CSV directement : <em>Import › CSV</em>. Les deux fichiers sont
+ci-dessous. Les tableaux en dessous servent à repérer les lignes avant la prise.</p>
+<button class="dlb" id="f63" data-nom="NOTION-base-clients.csv" onclick="tele(this)"><span class="dlb-i">⬇</span><span class="dlb-t"><b>La base Clients</b><span>3 clients — les mêmes qu&#x27;au chapitre Airtable · NOTION-base-clients.csv · 0 Ko</span></span><script type="application/octet-stream" id="b63">77u/Q2xpZW50LFNlY3RldXIsSW50ZXJsb2N1dGV1cixTdGF0dXQsUHJvY2hhaW5lIHJlbGFuY2UsRGVwdWlzDQpNZW51aXNlcmllIFZhc3NldXIsQXJ0aXNhbmF0IGR1IGJvaXMsSMOpbMOobmUgVmFzc2V1cixFbiBjb3VycywyMDI2LTEwLTIwLDIwMjYtMDYNCkNsaW5pcXVlIHbDqXTDqXJpbmFpcmUgZGVzIFRpbGxldWxzLFNhbnTDqSBhbmltYWxlLEthcmltIEJlbmHDr3NzYSxFbiBjb3VycywyMDI2LTEwLTE2LDIwMjYtMDkNCkxpYnJhaXJpZSBMZSBQYXNzYWdlLENvbW1lcmNlIGRlIGTDqXRhaWwsTWFyaW5lIExlZm9ydCxUZXJtaW7DqSwyMDI2LTExLTAzLDIwMjYtMDQNCg==</script></button><button class="dlb" id="f64" data-nom="NOTION-base-prestations.csv" onclick="tele(this)"><span class="dlb-i">⬇</span><span class="dlb-t"><b>La base Prestations</b><span>6 prestations réparties inégalement, pour la relation de la leçon 8 · NOTION-base-prestations.csv · 0 Ko</span></span><script type="application/octet-stream" id="b64">77u/UHJlc3RhdGlvbixDbGllbnQsVHlwZSxTdGF0dXQsw4ljaMOpYW5jZSxNb250YW50ICjigqwpDQpDYWRyYWdlIGV0IGVudHJldGllbnMsTWVudWlzZXJpZSBWYXNzZXVyLENhZHJhZ2UsVGVybWluw6ksMjAyNi0wOS0xOCwxOTAwDQpDb25zdHJ1Y3Rpb24gZGUgbGEgYmFzZSxNZW51aXNlcmllIFZhc3NldXIsQ29uc3RydWN0aW9uLEVuIGNvdXJzLDIwMjYtMTEtMjgsNDIwMA0KQXV0b21hdGlzYXRpb24gZGVzIHJlbGFuY2VzLE1lbnVpc2VyaWUgVmFzc2V1cixDb25zdHJ1Y3Rpb24sw4AgZMOpbWFycmVyLDIwMjYtMTItMDUsMjgwMA0KSm91cm7DqWUgZGUgZm9ybWF0aW9uLE1lbnVpc2VyaWUgVmFzc2V1cixGb3JtYXRpb24sw4AgZMOpbWFycmVyLDIwMjYtMTItMTIsMjMwMA0KQXRlbGllciBkZSBwcmlzZSBlbiBtYWluLENsaW5pcXVlIHbDqXTDqXJpbmFpcmUgZGVzIFRpbGxldWxzLEZvcm1hdGlvbixFbiBjb3VycywyMDI2LTExLTA2LDQ4MA0KVml0cmluZSBldCBtaXNlIGVuIGxpZ25lLExpYnJhaXJpZSBMZSBQYXNzYWdlLENvbnN0cnVjdGlvbixUZXJtaW7DqSwyMDI2LTEwLTAyLDIzMDANCg==</script></button><div class="tw"><table><thead><tr><th>Client</th><th>Secteur</th><th>Interlocuteur</th><th>Statut</th><th>Prochaine relance</th><th>Depuis</th></tr></thead><tbody><tr><td>Menuiserie Vasseur</td><td>Artisanat du bois</td><td>Hélène Vasseur</td><td>En cours</td><td>2026-10-20</td><td>2026-06</td></tr><tr><td>Clinique vétérinaire des Tilleuls</td><td>Santé animale</td><td>Karim Benaïssa</td><td>En cours</td><td>2026-10-16</td><td>2026-09</td></tr><tr><td>Librairie Le Passage</td><td>Commerce de détail</td><td>Marine Lefort</td><td>Terminé</td><td>2026-11-03</td><td>2026-04</td></tr></tbody></table></div><p class="cap">Les mêmes clients que dans la base Airtable du chapitre 1. La cohérence d'un chapitre à l'autre est ce qui fait tenir le fil rouge.</p><div class="cbx">
+  <div class="cbx-h"><span class="cbx-l">Base Clients — à coller dans une table Notion</span>
+    <button class="cbx-b" onclick="cp(this,'d65')">Copier</button></div>
+  <pre id="d65" class="cbx-p">Client	Secteur	Interlocuteur	Statut	Prochaine relance	Depuis
+Menuiserie Vasseur	Artisanat du bois	Hélène Vasseur	En cours	2026-10-20	2026-06
+Clinique vétérinaire des Tilleuls	Santé animale	Karim Benaïssa	En cours	2026-10-16	2026-09
+Librairie Le Passage	Commerce de détail	Marine Lefort	Terminé	2026-11-03	2026-04</pre>
+</div><div class="tw"><table><thead><tr><th>Prestation</th><th>Client</th><th>Type</th><th>Statut</th><th>Échéance</th><th>Montant (€)</th></tr></thead><tbody><tr><td>Cadrage et entretiens</td><td>Menuiserie Vasseur</td><td>Cadrage</td><td>Terminé</td><td>2026-09-18</td><td>1900</td></tr><tr><td>Construction de la base</td><td>Menuiserie Vasseur</td><td>Construction</td><td>En cours</td><td>2026-11-28</td><td>4200</td></tr><tr><td>Automatisation des relances</td><td>Menuiserie Vasseur</td><td>Construction</td><td>À démarrer</td><td>2026-12-05</td><td>2800</td></tr><tr><td>Journée de formation</td><td>Menuiserie Vasseur</td><td>Formation</td><td>À démarrer</td><td>2026-12-12</td><td>2300</td></tr><tr><td>Atelier de prise en main</td><td>Clinique vétérinaire des Tilleuls</td><td>Formation</td><td>En cours</td><td>2026-11-06</td><td>480</td></tr><tr><td>Vitrine et mise en ligne</td><td>Librairie Le Passage</td><td>Construction</td><td>Terminé</td><td>2026-10-02</td><td>2300</td></tr></tbody></table></div><p class="cap">Menuiserie Vasseur en a quatre, la Clinique une, la Librairie une. Sans cet écart, la relation de la leçon 8 ne se voit pas. Des statuts et des dates variés, sinon les trois vues de la leçon 9 se ressemblent toutes.</p><div class="cbx">
+  <div class="cbx-h"><span class="cbx-l">Base Prestations — à coller dans une table Notion</span>
+    <button class="cbx-b" onclick="cp(this,'d66')">Copier</button></div>
+  <pre id="d66" class="cbx-p">Prestation	Client	Type	Statut	Échéance	Montant (€)
+Cadrage et entretiens	Menuiserie Vasseur	Cadrage	Terminé	2026-09-18	1900
+Construction de la base	Menuiserie Vasseur	Construction	En cours	2026-11-28	4200
+Automatisation des relances	Menuiserie Vasseur	Construction	À démarrer	2026-12-05	2800
+Journée de formation	Menuiserie Vasseur	Formation	À démarrer	2026-12-12	2300
+Atelier de prise en main	Clinique vétérinaire des Tilleuls	Formation	En cours	2026-11-06	480
+Vitrine et mise en ligne	Librairie Le Passage	Construction	Terminé	2026-10-02	2300</pre>
+</div>
+
+<div class="part-sep"></div>
+<h3>Partie 1 — Les bases</h3>
+
+<div class="lec" id="L01">
+  <div class="lec-h"><span class="lec-n">01</span><span class="lec-t">Pourquoi pas un dossier de documents</span><span class="lec-d">6 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Vous avez tout écrit. Le problème, c'est que vous ne retrouvez rien. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>L'<b>espace fouillis</b> importé, en plein écran. Rien d'autre n'est ouvert.</dd><dt>Données</dt><dd>L'archive fournie plus haut : 18 pages mal rangées.</dd><dt>Ce qu'il contient</dt><dd>Trois <b>pages sans titre</b>, dont deux vides et une qui s'arrête en plein milieu d'une phrase. Trois <b>doublons francs</b> : « Proposition Vasseur », « Proposition Vasseur v2 », « Proposition Vasseur FINAL (2) » — avec des dates <b>écrites dans le texte</b>, 3 mars et 11 mars. Deux <b>racines qui disent la même chose</b> : « Clients » et « Mes clients ». Deux pages de tarifs qui se contredisent : « Tarifs » et « Tarifs 2024 ». Le <b>même paragraphe</b> collé dans trois pages. Et une <b>page enfouie sur quatre niveaux</b> : Divers › Trucs › À trier › Compte rendu Vasseur 14 février.</dd><dt>À ne pas montrer</dt><dd>La colonne des <b>dates de modification</b>. Comme l'espace a été importé, elles sont toutes identiques. Le désordre se voit dans les titres et dans le contenu, pas là.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Faire défiler la liste des pages de haut en bas.</li><li>Ouvrir deux pages sans titre : l'une vide, l'autre qui s'arrête au milieu d'une phrase.</li><li>Montrer les trois « Proposition Vasseur » côte à côte. Les deux dernières sont identiques, à une ligne près, et <b>aucune ne dit laquelle est la bonne</b>.</li><li>Ouvrir « Tarifs » et « Tarifs 2024 » : 850 € d'un côté, 780 € de l'autre, et rien n'indique laquelle s'applique.</li><li><b>Chercher le compte rendu Vasseur du 14 février en direct</b>, en naviguant à la main. Quatre niveaux. C'est le moment le plus parlant de la leçon.</li><li>Dire qu'on va construire l'espace qui remplace tout ça, et s'arrêter là.</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> L'espace propre, et Notion comme outil. Cette leçon pose le problème, elle ne le règle pas.</p>
+  </div>
+</div>
+<div class="lec" id="L02">
+  <div class="lec-h"><span class="lec-n">02</span><span class="lec-t">Notion, vu de haut</span><span class="lec-d">6 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Une page, des blocs, une base. Trois mots, et on a le vocabulaire. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>Une page Notion vide, dans l'espace vierge du cas pratique.</dd><dt>Données</dt><dd>Aucune. On tape trois lignes au clavier.</dd><dt>Ce qui compte</dt><dd>Comprendre que <b>tout est une page</b>, et qu'une page vit <b>dans</b> une autre page. C'est ce qui explique l'arborescence de la leçon 5 et le piège de partage de la leçon 15.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer une page, la nommer.</li><li>Taper trois lignes, puis montrer qu'<b>un paragraphe est un bloc</b> : le saisir par sa poignée et le déplacer.</li><li>Changer un bloc de type : paragraphe → titre → liste. La même matière, présentée autrement.</li><li>Créer une <b>sous-page</b> à l'intérieur, et montrer qu'elle apparaît dans la colonne de gauche, en dessous.</li><li>Taper <code>/</code> et faire défiler la liste des blocs disponibles, sans s'y attarder : dire simplement que tout ce qu'on verra dans ce chapitre sort de là.</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> Les bases de données, les modèles, l'IA. Chacun a sa leçon. Ici, trois mots de vocabulaire et on s'arrête.</p>
+  </div>
+</div>
+<div class="lec" id="L03">
+  <div class="lec-h"><span class="lec-n">03</span><span class="lec-t">Ce que ça coûte vraiment</span><span class="lec-d">7 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Le gratuit tient pour quelqu'un qui travaille seul. Voilà exactement où il s'arrête. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>notion.com/pricing, puis l'espace gratuit <b>avec son deuxième membre</b>.</dd><dt>Données</dt><dd>Aucune. <b>Lire les chiffres à l'écran</b>, dire la date du jour.</dd><dt>Le point à ne pas rater</dt><dd>La limite de blocs <b>ne s'applique pas à un espace d'une seule personne</b>. Elle apparaît dès qu'on est deux. C'est pour ça qu'il faut un second membre invité pour la montrer.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Ouvrir la page de tarifs, dire la date.</li><li>Lire à l'écran les limites du gratuit : <b>10 invités externes</b>, <b>5 Mo par fichier</b>, <b>7 jours d'historique de page</b>.</li><li>Montrer la limite de blocs sur l'espace à deux membres, et dire ce qui se passe quand elle est atteinte : on peut <b>lire et modifier</b> ce qui existe, on ne peut plus <b>ajouter</b>.</li><li>Dire la conséquence des 7 jours d'historique : <b>au-delà, une suppression accidentelle n'est plus récupérable</b>. C'est la limite qui coûte le plus cher, et presque personne ne la connaît.</li><li>Nommer ce qui est inclus dans le gratuit et qu'on verra : les <b>formulaires de base</b> (leçon 11), la <b>publication d'une page en site</b> (leçon 15), <b>Notion Calendar</b>.</li><li>Nommer ce qui ne l'est pas, et le dire franchement : les <b>graphiques illimités</b> — le gratuit n'en donne <b>qu'un seul</b> (leçon 10) —, les <b>automatisations de base de données</b> hors notification Slack (leçon 12), les <b>agents</b> et la recherche d'entreprise, qui demandent un plan <b>Business</b> — ils seront nommés en leçon 14, pas montrés.</li><li>Poser le calcul à l'écran : <b>combien de clients</b> avant d'être gêné ? Le faire à la main.</li></ol>
+    <div class="tip warn"><span class="tip-i">📅</span><div class="tip-c"><strong>Ces chiffres bougent</strong>
+Ne jamais les annoncer de mémoire. Rouvrir la page le matin du tournage et annoncer la date : une
+vidéo datée reste utilisable même quand une grille change.</div></div>
+    <p class="hc2"><b>Hors champ :</b> Les offres Enterprise, le SSO et les connexions d'entreprise. L'apprenant est sur un compte gratuit.</p>
+  </div>
+</div>
+<h3>Partie 2 — Le cas pratique : la base de connaissance du cabinet</h3>
+<p>À partir d'ici, tout s'enchaîne : chaque leçon repart de l'espace laissé par la précédente.</p>
+
+<div class="lec" id="L04">
+  <div class="lec-h"><span class="lec-n">04</span><span class="lec-t">Le point de départ</span><span class="lec-d">6 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Combien de fois tu as réécrit la même proposition cette année ? »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>Les <b>trois propositions anonymisées</b>, ouvertes côte à côte en trois colonnes. <b>Notion reste fermé.</b></dd><dt>Données</dt><dd>Trois propositions bâties sur le même squelette : <b>quatre sections sur sept sont identiques mot pour mot</b> — la méthode, les engagements, ce qui n'est pas inclus, les conditions. Seuls le contexte, le besoin et les délais changent.</dd><dt>La forme</dt><dd><b>Surligner les blocs identiques à l'écran</b>, ne pas les décompter à l'oral. C'est le surlignage qui fait la démonstration.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Ouvrir les trois propositions côte à côte.</li><li>Surligner, section par section, ce qui est identique dans les trois.</li><li>Dire le ratio obtenu — autour des deux tiers — et <b>le montrer plutôt que l'annoncer</b>.</li><li>Chiffrer le temps : combien d'heures pour réécrire ce qui était déjà écrit, sur une année.</li><li>Dire la phrase : « vous réécrivez chaque fois les deux tiers d'un document que vous avez déjà écrit. C'est ça qu'on va arrêter. »</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> Notion, qui arrive en leçon 5. Ici on compte ce qui se répète, dans les documents réels.</p>
+  </div>
+</div>
+<div class="lec" id="L05">
+  <div class="lec-h"><span class="lec-n">05</span><span class="lec-t">L'arborescence</span><span class="lec-d">7 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Trois niveaux maximum. Au quatrième, plus personne ne retrouve rien. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>L'<b>espace vierge</b> du cas pratique. Pas l'espace fouillis.</dd><dt>Données</dt><dd>Aucune. On crée trois pages et on les nomme.</dd><dt>La règle à énoncer</dt><dd><b>Trois racines, et on n'en ajoute pas une quatrième sans en supprimer une autre.</b> C'est cette contrainte qui empêche l'espace de redevenir le fouillis de la leçon 1.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer les trois pages racines : <b>Clients</b>, <b>Méthode</b>, <b>Interne</b>.</li><li>Créer les sous-pages de Méthode et d'Interne, selon le schéma ci-dessous.</li><li>Montrer qu'on est à <b>trois niveaux</b> et dire ce qui se passe au quatrième : on ne retrouve plus rien, et on l'a vu en leçon 1.</li><li>Énoncer la règle des trois racines, et la justifier en une phrase.</li></ol>
+    <div class="cbx">
+  <div class="cbx-h"><span class="cbx-l">L&#x27;arborescence à construire</span>
+    <button class="cbx-b" onclick="cp(this,'d67')">Copier</button></div>
+  <pre id="d67" class="cbx-p">Espace du cabinet
+├── Clients
+│   └── (une page par client, créée depuis le modèle de la leçon 7)
+├── Méthode
+│   ├── Trame de cadrage
+│   ├── Modèle de proposition
+│   ├── Modèle de compte rendu
+│   └── Note de livraison
+└── Interne
+    ├── Tarifs et conditions
+    ├── Charge et disponibilités
+    └── Administratif        &lt;-- la sous-page sensible de la leçon 15</pre>
+</div>
+    <p class="hc2"><b>Hors champ :</b> Les bases de données, qui arrivent en leçon 6. On crée des pages, on les nomme, on s'arrête.</p>
+  </div>
+</div>
+<div class="lec" id="L06">
+  <div class="lec-h"><span class="lec-n">06</span><span class="lec-t">La base Clients</span><span class="lec-d">8 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Une ligne par client, et tout ce qui le concerne dedans. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>La page <b>Clients</b>, vide, et l'import du fichier CSV.</dd><dt>Données</dt><dd><b>NOTION-base-clients.csv</b>, fourni plus haut. Trois clients, les mêmes qu'au chapitre Airtable.</dd><dt>Le principe à poser</dt><dd>On ne pose que les propriétés <b>qu'on remplira vraiment</b>. Une propriété jamais remplie est pire qu'une propriété absente : elle fait croire que l'information existe.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer la base dans la page Clients.</li><li><b>Importer le CSV</b> plutôt que saisir à la main. Montrer le geste : <i>Import › CSV</i>.</li><li>Reprendre les propriétés une par une et <b>poser leur type</b> : Secteur en texte, Statut en <b>sélection</b>, Prochaine relance en <b>date</b>.</li><li>Dire pourquoi Statut est une sélection et pas du texte libre — et renvoyer au chapitre Airtable, leçon 6, sans réexpliquer.</li><li>Ouvrir une fiche client et la remplir complètement : c'est elle qui servira de référence au modèle de la leçon 7.</li><li>Supprimer une propriété d'exemple qu'on ne remplira jamais, en le disant.</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> Les relations et les rollups, qui ont leur leçon. On pose les propriétés et on remplit une fiche.</p>
+  </div>
+</div>
+<div class="lec" id="L07">
+  <div class="lec-h"><span class="lec-n">07</span><span class="lec-t">Le modèle qui fait gagner une heure</span><span class="lec-d">9 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Tu crées un nouveau client, et la trame complète apparaît déjà remplie. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>La base Clients, et son menu de création de <b>modèle de page</b>.</dd><dt>Données</dt><dd>La <b>trame de cadrage</b>, à coller dans le modèle — elle est plus bas, avec son bouton Copier.</dd><dt>Pourquoi c'est le cœur du chapitre</dt><dd>C'est ce qui transforme Notion d'un endroit où l'on range en un <b>outil de production</b>. Tout le reste du chapitre sert ce geste-là.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Ouvrir le menu de la base et créer un <b>nouveau modèle de page</b>.</li><li><b>Coller la trame de cadrage</b> dans le modèle, d'un coup.</li><li>Parcourir les sections en nommant celle qu'on oublie toujours : <b>« Ce qu'on ne touche pas »</b>. Dire que c'est elle qui évite les malentendus en fin de mission.</li><li>Enregistrer le modèle, revenir à la base, <b>créer un nouveau client</b> depuis le modèle.</li><li>Montrer la page qui arrive <b>déjà structurée</b> : il n'y a plus qu'à remplir les blancs.</li><li>Faire le compte à voix haute : ce qu'on vient de ne pas réécrire.</li></ol>
+    <div class="cbx">
+  <div class="cbx-h"><span class="cbx-l">La trame de cadrage — à coller dans le modèle</span>
+    <button class="cbx-b" onclick="cp(this,'d68')">Copier</button></div>
+  <pre id="d68" class="cbx-p"># La trame de cadrage — leçon 7
+
+C&#x27;est elle qui devient le **modèle** de page client. L&#x27;intérêt de la leçon : créer un
+nouveau client et voir la page arriver déjà remplie.
+
+---
+
+## Fiche client — {{ Nom du client }}
+
+**Secteur** : …
+**Taille** : …
+**Interlocuteur** : …
+**Depuis** : …
+**Statut** : à qualifier · en cours · terminé
+
+### Ce qu&#x27;ils font
+Trois lignes, en français courant.
+
+### Ce qui les amène
+La phrase qu&#x27;ils ont dite, avec leurs mots. Pas la reformulation.
+
+### Ce qui se passe aujourd&#x27;hui
+Le déroulé réel, étape par étape, avec le temps que chacune prend. **Pas le processus
+théorique** : celui qui se fait vraiment.
+
+### Ce qui coince
+| Problème | Combien de temps ça coûte | À qui |
+| :-- | :-- | :-- |
+
+### Ce qu&#x27;on ne touche pas
+Les sujets volontairement hors périmètre, et pourquoi. C&#x27;est la section qu&#x27;on oublie, et
+c&#x27;est elle qui évite les malentendus en fin de mission.
+
+### Les personnes concernées
+| Qui | Rôle | Ce qu&#x27;elle attend | Ce qui l&#x27;inquiète |
+| :-- | :-- | :-- | :-- |
+
+### Les outils en place
+| Outil | Qui s&#x27;en sert | Ce qu&#x27;on en garde |
+| :-- | :-- | :-- |
+
+### Les données
+Quelles données, où, lesquelles sont personnelles, qui y a accès.
+
+### Décisions prises au cadrage
+- …
+
+### Questions ouvertes
+- …
+
+### Prochaine étape
+Quoi, qui, quand.
+
+---
+
+## Au tournage
+
+1. Construire le modèle **une fois**, à l&#x27;écran.
+2. Créer un nouveau client avec le bouton du modèle.
+3. Montrer la page qui arrive déjà structurée — c&#x27;est l&#x27;heure gagnée annoncée par le
+   titre de la leçon.</pre>
+</div>
+    <p class="hc2"><b>Hors champ :</b> Les modèles automatiques et les boutons, qui arrivent en leçon 12. Un modèle de page dans une base, bien fait, porte toute la leçon.</p>
+  </div>
+</div>
+<div class="lec" id="L08">
+  <div class="lec-h"><span class="lec-n">08</span><span class="lec-t">Relier les bases, et calculer</span><span class="lec-d">9 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Ouvrir un client et voir toutes ses prestations, sans rien recopier. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>Les deux bases, Clients et Prestations, remplies.</dd><dt>Données</dt><dd><b>NOTION-base-prestations.csv</b>, fourni plus haut. Menuiserie Vasseur en a quatre, la Clinique une, la Librairie une.</dd><dt>Renvoi</dt><dd><b>Même raisonnement qu'au chapitre Airtable, leçon 7.</b> On ne réexplique pas ce qu'est une relation — on la nomme et on la pose.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer la base <b>Prestations</b> dans la page Méthode et importer son CSV.</li><li>Poser la propriété <b>Relation</b> entre Prestations et Clients.</li><li>Relier les six prestations à leur client.</li><li>Ouvrir la fiche <b>Menuiserie Vasseur</b> et montrer ses <b>quatre prestations remontées</b>. Ouvrir la Clinique : une seule. C'est l'écart qui rend la liaison visible.</li><li>Poser un <b>rollup</b> sur la base Clients : la <b>somme des montants</b> de ses prestations. Modifier un montant dans Prestations, et montrer le total bouger tout seul.</li><li>Ajouter une <b>propriété formule</b> simple, une seule : le nombre de jours jusqu'à la prochaine relance. Dire qu'on s'arrête là volontairement.</li></ol>
+    <div class="tip ok"><span class="tip-i">🧮</span><div class="tip-c"><strong>Les totaux à vérifier avant la prise</strong>
+Menuiserie Vasseur doit afficher <strong>11 200 €</strong> (1 900 + 4 200 + 2 800 + 2 300), la
+Clinique <strong>480 €</strong> et la Librairie <strong>2 300 €</strong>. Si le rollup affiche autre
+chose, une prestation n'est pas reliée.</div></div>
+    <p class="hc2"><b>Hors champ :</b> Le langage de formule en entier. Une relation, un rollup et une formule d'une ligne suffisent — comme au chapitre Airtable, pour que le pont se voie.</p>
+  </div>
+</div>
+<div class="lec" id="L09">
+  <div class="lec-h"><span class="lec-n">09</span><span class="lec-t">Les vues qui font travailler la base</span><span class="lec-d">7 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Une base qu'on ne sait pas filtrer, c'est une liste qu'on finit par ne plus ouvrir. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>La base Clients remplie, et son sélecteur de vues.</dd><dt>Données</dt><dd>Celles des leçons précédentes — avec des statuts et des dates variés, sinon les trois vues se ressemblent toutes.</dd><dt>Les trois réglages</dt><dd>Le <b>filtre</b> (ne montrer que les clients en cours), le <b>tri</b> (la prochaine relance en haut), le <b>regroupement</b> (une colonne par statut). Ce sont eux que presque personne ne pose.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer la vue <b>« à relancer cette semaine »</b> : filtre sur le statut, tri sur la date de relance.</li><li>Créer la vue <b>tableau par statut</b> : regroupement sur la propriété Statut.</li><li>Créer la vue <b>calendrier des échéances</b>.</li><li><b>Déplacer une fiche</b> d'une colonne à l'autre dans le tableau, puis revenir sur les deux autres vues et montrer que le statut a changé partout. C'est ce geste qui fait comprendre qu'il n'y a qu'une seule donnée.</li><li>Énoncer la règle de méthode : <b>une vue par usage réel de la journée</b>, pas une vue parce que c'est joli.</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> Les vues liées entre plusieurs bases et les tableaux de bord. Trois vues d'une même base, une par usage réel.</p>
+  </div>
+</div>
+<div class="lec" id="L10">
+  <div class="lec-h"><span class="lec-n">10</span><span class="lec-t">Un seul graphique, bien choisi</span><span class="lec-d">6 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Le gratuit t'en donne un. Alors autant qu'il serve. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>La base Prestations, et la création d'une <b>vue graphique</b>.</dd><dt>Données</dt><dd>Les six prestations, avec leurs montants et leurs statuts.</dd><dt>La contrainte</dt><dd>Le gratuit donne droit à <b>un seul graphique</b>. On peut le supprimer pour en créer un autre, mais pas en avoir deux. C'est à dire, et c'est ce qui rend le choix intéressant.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer une vue graphique sur la base Prestations.</li><li>Parcourir les types disponibles en les nommant : barres verticales, barres horizontales, courbe, anneau, et <b>Nombre</b> — un seul chiffre en grand.</li><li>Construire celui qui sert vraiment : la <b>somme des montants par statut</b>. Axe des abscisses le statut, axe des ordonnées la somme.</li><li>Montrer l'autre réglage utile : l'axe des ordonnées peut compter les éléments (<b>Count</b>) au lieu de les additionner.</li><li>Dire la contrainte du gratuit : un seul graphique, et le choix que ça impose.</li><li>Dire ce qu'on ne peut pas faire dans cette vue : <b>modifier une donnée</b>. Pour ça, on repasse par une autre vue.</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> Les tableaux de bord à plusieurs graphiques, qui demandent un plan payant. On en fait un, bien.</p>
+  </div>
+</div>
+<div class="lec" id="L11">
+  <div class="lec-h"><span class="lec-n">11</span><span class="lec-t">Le formulaire de cadrage</span><span class="lec-d">7 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Arrête de poser les mêmes questions par mail. Envoie le formulaire. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>Notion, puis le formulaire ouvert <b>depuis une autre fenêtre</b>, comme le verrait le client.</dd><dt>Données</dt><dd>L'<b>adresse mail de test</b>, pour remplir le formulaire de l'extérieur.</dd><dt>Ce qui est gratuit et ce qui ne l'est pas</dt><dd>Les <b>formulaires de base</b> sont inclus sur tous les plans. La <b>logique conditionnelle</b> — afficher une question selon la réponse précédente — demande un plan <b>Business</b>. Le retrait du logo Notion demande un plan payant.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer le formulaire : taper <code>/form</code>, ou ajouter une <b>vue Formulaire</b> à la base Clients.</li><li>Poser quatre questions reprises de la trame de cadrage : le secteur, ce qui les amène, ce qui coince, l'échéance souhaitée.</li><li>Montrer que <b>chaque question devient une propriété de la base</b> — c'est ça le mécanisme.</li><li>Publier le formulaire et <b>l'ouvrir dans une autre fenêtre</b>. Le remplir comme le ferait un client.</li><li>Revenir dans Notion et montrer la réponse arrivée dans la vue <b>Responses</b>, avec ses propriétés remplies.</li><li>Dire le point qui surprend : un formulaire partagé sur le web est <b>anonyme</b>, il n'enregistre pas le nom du répondant. Si on veut savoir qui a répondu, il faut le demander dans une question.</li><li>Nommer la logique conditionnelle et son plan, sans la construire.</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> Les formulaires personnalisés et la logique conditionnelle, réservés aux plans payants. On construit le formulaire que l'apprenant peut refaire ce soir.</p>
+  </div>
+</div>
+<div class="lec" id="L12">
+  <div class="lec-h"><span class="lec-n">12</span><span class="lec-t">Ce qui se répète : boutons et automatisations</span><span class="lec-d">8 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Trois clics que tu fais vingt fois par mois. On va les mettre dans un bouton. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>La base Prestations, et la création d'un <b>bouton</b>.</dd><dt>Données</dt><dd>Celles des leçons précédentes.</dd><dt>La distinction à poser</dt><dd>Un <b>bouton</b> part d'un clic. Une <b>automatisation</b> part d'un événement dans la base, sans que personne clique. Et la seconde demande un plan payant.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Créer un <b>bouton</b> dans la base Prestations : « Nouvelle prestation de cadrage » — il ajoute une ligne avec le type et le statut déjà remplis.</li><li>Cliquer dessus à l'écran, et montrer la ligne apparaître complète.</li><li>Ouvrir ensuite le panneau des <b>automatisations de base de données</b> et parcourir les déclencheurs en les nommant : <b>page ajoutée</b>, <b>propriété modifiée</b>, et <b>tous les {jour, semaine, mois}</b>.</li><li>Parcourir les actions : modifier une propriété, ajouter une page dans une autre base, envoyer une notification, <b>envoyer un mail depuis un compte Gmail</b>, appeler un webhook.</li><li>Dire franchement ce qui bloque sur le gratuit : <b>seules les notifications Slack</b> sont créables. Le reste demande un plan payant. On peut <b>utiliser</b> les automatisations d'un modèle, pas les modifier.</li><li>Faire le pont avec le chapitre Make : quand l'automatisation doit sortir de Notion, c'est Make ou n8n qui prennent le relais.</li></ol>
+    <div class="tip err"><span class="tip-i">🚧</span><div class="tip-c"><strong>Ne pas construire une automatisation sur le compte gratuit</strong>
+Elle sera refusée à l'écran. Les déclencheurs et les actions se montrent dans le panneau, on les
+nomme, et on dit quel plan les débloque.</div></div>
+    <p class="hc2"><b>Hors champ :</b> La construction d'une automatisation complète, impossible à refaire sur le gratuit. On montre le bouton, qui marche, et on nomme le reste.</p>
+  </div>
+</div>
+<div class="lec" id="L13">
+  <div class="lec-h"><span class="lec-n">13</span><span class="lec-t">Écrire une fois, afficher partout</span><span class="lec-d">6 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Tes conditions tarifaires sont dans quatre pages. Tu en modifies une. Les trois autres sont fausses. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>La page <b>Interne › Tarifs et conditions</b>, puis une page client.</dd><dt>Données</dt><dd>Un court bloc de conditions — trois lignes suffisent.</dd><dt>Ce que ça règle</dt><dd>Le bloc n'est pas copié : c'est <b>le même bloc</b>, affiché à deux endroits. Le modifier d'un côté le modifie de l'autre.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Écrire les trois lignes de conditions dans la page Tarifs et conditions.</li><li>Les transformer en <b>bloc synchronisé</b>, et copier le lien de synchronisation.</li><li>Aller dans la page d'un client, coller le bloc synchronisé.</li><li><b>Modifier le texte depuis la page client</b>, revenir à la page Tarifs : il a changé là aussi.</li><li>Dire où ça sert vraiment : les conditions, la méthode, les mentions légales — tout ce qui doit être identique partout et à jour partout.</li><li>Dire la limite : un bloc synchronisé reste <b>un seul contenu</b>. Si deux clients doivent avoir des conditions différentes, ce n'est pas le bon outil.</li></ol>
+    
+    <p class="hc2"><b>Hors champ :</b> Les blocs synchronisés entre espaces de travail. Un bloc, deux pages, et le geste est compris.</p>
+  </div>
+</div>
+<div class="lec" id="L14">
+  <div class="lec-h"><span class="lec-n">14</span><span class="lec-t">L'IA sur ses propres contenus</span><span class="lec-d">9 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« L'intérêt, ce n'est pas que l'IA écrive. C'est qu'elle ait lu ce que tu as déjà fait. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>L'<b>espace dense</b> importé — 20 pages de contenu réel. <b>Un seul compte, le gratuit.</b></dd><dt>Données</dt><dd>La question préparée, et sa <b>question de secours</b>. Les deux ont été testées la veille. La réponse est dans <b>« Compte rendu Vasseur — 14 février »</b>, et la date est dans le titre : c'est elle qui fait l'effet « page ancienne », pas la métadonnée.</dd><dt>Ce qu'il faut annoncer</dt><dd>L'assistant qui cherche dans l'espace est accessible en <b>essai limité</b> sur le gratuit — c'est lui qu'on montre, et c'est lui que l'apprenant pourra refaire ce soir. Les <b>agents personnalisés</b> demandent un plan <b>Business</b> : on les <b>nomme</b>, on ne les montre pas. Montrer ce qu'il ne peut pas avoir ne lui apprend rien.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Poser la question préparée à l'assistant, sur l'espace dense.</li><li>Montrer la réponse <b>et la page d'où elle vient</b> : « Compte rendu Vasseur — 14 février », que personne n'aurait rouverte.</li><li>Ouvrir la page et <b>lire la ligne à l'écran</b> : la reprise de l'historique se limite à trois ans, et Hélène a validé à condition de garder un export du tableur d'origine. Le détail est là, et nulle part ailleurs.</li><li>Dire la différence : une IA générique invente une réponse plausible, celle-ci cite <b>ce que l'apprenant a écrit il y a huit mois</b>.</li><li>Dire que sur le gratuit c'est un <b>essai limité</b>, et ce que ça veut dire concrètement : ça s'arrête.</li><li>Dire en une phrase ce qu'est un <b>agent personnalisé</b> — un assistant configuré une fois, qui travaille ensuite seul sur l'espace — et <b>annoncer franchement qu'il demande un plan Business</b> et des crédits. Ne pas le montrer.</li><li>Conclure sur ce que l'apprenant peut refaire ce soir : poser une question à son propre espace, et obtenir une réponse tirée de ses propres pages.</li></ol>
+    <div class="tip err"><span class="tip-i">🎲</span><div class="tip-c"><strong>Deux questions préparées, pas une</strong>
+La réponse est dans <strong>une seule page</strong> de l'espace dense, et <strong>le mot
+« historique » n'est pas dans son titre</strong> — sinon c'est la recherche classique qui répond.
+Tester la veille. Si la première question échoue au tournage, enchaîner sur la seconde.</div></div><div class="cbx">
+  <div class="cbx-h"><span class="cbx-l">La question de secours</span>
+    <button class="cbx-b" onclick="cp(this,'d69')">Copier</button></div>
+  <pre id="d69" class="cbx-p">Pourquoi on ne reprend pas les chantiers d&#x27;avant 2023 chez Vasseur ?</pre>
+</div><div class="cbx">
+  <div class="cbx-h"><span class="cbx-l">La question à poser</span>
+    <button class="cbx-b" onclick="cp(this,'d70')">Copier</button></div>
+  <pre id="d70" class="cbx-p">Qu&#x27;est-ce qu&#x27;on avait décidé pour la reprise de l&#x27;historique chez Vasseur ?</pre>
+</div>
+    <p class="hc2"><b>Hors champ :</b> Les agents personnalisés, qui demandent un plan Business. On les nomme et on dit ce qu'ils coûtent — on ne les montre pas, parce que l'apprenant ne pourra pas les refaire.</p>
+  </div>
+</div>
+<h3>Partie 3 — Fiabiliser et livrer</h3>
+
+<div class="lec" id="L15">
+  <div class="lec-h"><span class="lec-n">15</span><span class="lec-t">Partager sans tout ouvrir</span><span class="lec-d">8 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Donner une page à un client sans lui donner la clé de la maison. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>La page <b>Interne</b> et ses sous-pages, puis une fenêtre privée.</dd><dt>Données</dt><dd>La page <b>Administratif</b>, avec son contenu préparé — il est plus bas.</dd><dt>Le piège</dt><dd>On partage une page, <b>et les sous-pages partent avec</b>. C'est ça qu'il faut voir se produire.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Partager la page <b>Interne</b> par lien public, sans réfléchir — comme tout le monde le fait.</li><li>Ouvrir le lien en <b>fenêtre privée</b>, non connectée.</li><li>Descendre jusqu'à la sous-page <b>Administratif</b>, l'ouvrir, et <b>lire à l'écran</b> la ligne « exception consentie pour Vasseur, 740 €, à ne pas ébruiter ».</li><li>Revenir dans Notion et montrer le bon geste : partager <b>la sous-page concernée</b>, pas sa parente.</li><li>Parcourir les <b>niveaux d'accès</b> en les nommant : lecture seule, commentaire, modification, accès complet. Dire lequel on donne à un client.</li><li>Montrer qu'on peut aussi <b>publier une page en site</b> — c'est inclus dans le gratuit — et dire la différence avec un partage : un site est <b>indexable</b>, il peut sortir dans un moteur de recherche.</li><li>Nommer les <b>commentaires et les mentions</b> comme la bonne façon de faire réagir un client sur une page, plutôt que de lui donner les droits de modification.</li></ol>
+    <div class="cbx">
+  <div class="cbx-h"><span class="cbx-l">Le contenu de la page « Administratif »</span>
+    <button class="cbx-b" onclick="cp(this,'d71')">Copier</button></div>
+  <pre id="d71" class="cbx-p"># Administratif
+
+## Charges fixes mensuelles
+Assurance professionnelle ........ 142 EUR
+Comptable ........................ 180 EUR
+Logiciels ........................  96 EUR
+
+## Tarifs plancher
+Ne pas descendre sous 850 EUR la journee.
+Exception consentie pour Vasseur : 740 EUR, a ne pas ebruiter.
+
+## Notes
+Relancer le comptable sur le decalage de novembre.</pre>
+</div>
+    <p class="hc2"><b>Hors champ :</b> Les permissions d'un espace d'équipe payant. On montre le partage d'une page et ce que voit vraiment un invité.</p>
+  </div>
+</div>
+<div class="lec" id="L16">
+  <div class="lec-h"><span class="lec-n">16</span><span class="lec-t">Limites et checklist</span><span class="lec-d">8 min</span></div>
+  <div class="lec-b">
+    <div class="say"><div class="sl">La phrase d'ouverture</div><p>« Un espace Notion vit ou meurt selon ce qu'on y range la première semaine. »</p></div>
+    <dl class="ecr"><dt>À l'écran</dt><dd>L'espace construit pendant les quinze leçons.</dd><dt>Données</dt><dd>Celles des leçons précédentes. Rien de nouveau.</dd><dt>La forme</dt><dd>La checklist se déroule <b>en direct dans l'espace</b>, pas lue sur une slide.</dd></dl>
+    <h4>Les gestes, dans l'ordre</h4>
+    <ol class="clics"><li>Reprendre les plafonds du gratuit et dire lequel arrive en premier : la <b>limite de blocs dès qu'on est deux</b>, les <b>10 invités</b>, les <b>5 Mo par fichier</b>.</li><li>Insister sur les <b>7 jours d'historique</b> : au-delà, une suppression accidentelle n'est plus récupérable. Montrer où se trouve l'historique d'une page.</li><li>Rappeler ce qui demande un plan payant et qu'on a nommé en route : les graphiques au-delà d'un seul, les automatisations hors Slack, les agents.</li><li>Poser la question des <b>données clients et de leur conservation</b> : qui a accès à l'espace, et pendant combien de temps on garde les pages d'un client dont la mission est finie. Renvoyer au chapitre Leexi, qui porte le cadre en entier.</li><li>Énoncer la règle d'entretien : <b>une page qui n'a pas servi en six mois est archivée, pas gardée « au cas où »</b>.</li><li><b>Archiver une page morte en direct</b>, et montrer où elle va.</li><li>Reprendre le compte de la leçon 4 et dire ce qu'on a supprimé comme travail.</li></ol>
+    <div class="tip warn"><span class="tip-i">🗄️</span><div class="tip-c"><strong>Les 7 jours sont la limite la plus coûteuse</strong>
+Ce n'est pas un plafond qui gêne, c'est un plafond qui fait perdre du travail. Le dire ici, et le
+redire dans la note de livraison.</div></div>
+    <p class="hc2"><b>Hors champ :</b> Les sauvegardes et les exports automatisés. La checklist porte sur ce qu'on range, ce qu'on archive et ce qui se perd après 7 jours.</p>
+  </div>
+</div></div>
+</div>
+<div class="footer">
+  <p><strong>🧠 Livret de tournage — Notion</strong></p>
+  <p>Studeria · parcours Focus outils · octobre 2026</p>
+</div>
+</div></div>
+
+<script>
+const links=document.querySelectorAll('.sidebar a');
+const chapters=document.querySelectorAll('.ch');
+function updateActive(){
+  let current='';
+  chapters.forEach(ch=>{if(ch.getBoundingClientRect().top<=150)current=ch.id;});
+  links.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+current);});
+}
+window.addEventListener('scroll',updateActive);updateActive();
+links.forEach(l=>l.addEventListener('click',()=>{
+  if(window.innerWidth<=800)document.querySelector('.sidebar').classList.remove('open');
+}));
+let DL=null;
+(async()=>{
+  try{DL=await window.claude.use("downloads");}catch(e){DL=null;}
+  if(!DL)document.querySelectorAll(".dlb").forEach(b=>{
+    b.disabled=true;
+    const s=b.querySelector(".dlb-t span");
+    if(s)s.textContent="T\u00e9l\u00e9chargement indisponible dans cette vue \u2014 demander le fichier \u00e0 Massylia";
+  });
+})();
+async function tele(btn){
+  if(!DL)return;
+  const b64=btn.querySelector("script").textContent.trim();
+  const bin=atob(b64);const u=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  const lbl=btn.querySelector(".dlb-t b");const o=lbl.textContent;
+  try{
+    await DL.save({filename:btn.dataset.nom,data:new Blob([u])});
+    lbl.textContent="Enregistr\u00e9 \u2713";
+  }catch(e){
+    lbl.textContent=(e&&e.code==="declined")?o:"Non enregistr\u00e9";
+  }
+  setTimeout(()=>{lbl.textContent=o;},2200);
+}
+function cp(btn,id){
+  const t=document.getElementById(id).textContent;
+  const done=()=>{const o=btn.textContent;btn.textContent='Copie\u0301 \u2713';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=o;btn.classList.remove('done');},1600);};
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done).catch(()=>fb());}
+  else fb();
+  function fb(){const a=document.createElement('textarea');a.value=t;a.style.position='fixed';
+    a.style.opacity='0';document.body.appendChild(a);a.select();
+    try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(a);}
+}
+</script>
+
+</body></html>
